@@ -8,13 +8,13 @@ class App extends Component {
     contacts: [
       {
         id: nanoid(),
-        name: 'Vlad',
-        number: '06233133576',
+        name: 'Apple',
+        number: '12349999',
       },
       {
         id: nanoid(),
-        name: 'Anton',
-        number: '09514061',
+        name: 'Android',
+        number: '54399921',
       },
     ],
     name: '',
@@ -29,25 +29,23 @@ class App extends Component {
     });
   };
 
-  isDuplicate(name, phoneNumber) {
+  isDuplicate(name) {
     const normalizedName = name.toLowerCase();
 
     const { contacts } = this.state;
-    const isUnique = contacts.find(({ name, number }) => {
-      return (
-        name.toLocaleLowerCase() === normalizedName && phoneNumber === number
-      );
+    const isUnique = contacts.find(({ name }) => {
+      return name.toLocaleLowerCase() === normalizedName;
     });
     return isUnique;
   }
 
   addContact = e => {
     e.preventDefault();
+    const { contacts, name, number } = this.state;
+    if (this.isDuplicate(name)) {
+      return alert(`${name} is already in contacts list`);
+    }
     this.setState(prevState => {
-      const { contacts, name, number } = prevState;
-      if (this.isDuplicate(name, number)) {
-        return alert(`${name}: ${number} is already in contacts list`);
-      }
       const newContact = {
         id: nanoid(),
         name,
@@ -59,15 +57,26 @@ class App extends Component {
 
   handleChange = ({ target }) => {
     const { name, value } = target;
-    console.log(name, value);
     this.setState({ [name]: value });
   };
+
+  getFilteredContacts() {
+    const { filter, contacts } = this.state;
+    if (!filter) {
+      return contacts;
+    }
+    const normalizedFilter = filter.toLowerCase();
+    const res = contacts.filter(({ name }) => {
+      return name.toLowerCase().includes(normalizedFilter);
+    });
+    return res;
+  }
 
   render() {
     const { addContact, handleChange, removeContact } = this;
     const { name, number } = this.state;
 
-    const { contacts } = this.state;
+    const contacts = this.getFilteredContacts();
     const items = contacts.map(({ id, name, number }) => (
       <li key={id} className={css.item}>
         {name}: {number}{' '}
@@ -116,7 +125,7 @@ class App extends Component {
         <div className={css.block}>
           <h3 className={css.title}>Contacts</h3>
           <label className={css.label}>Find contacts by name</label>
-          <input type="text" name="filter" />
+          <input name="filter" onChange={handleChange} />
           <ol className={css.list}>{items}</ol>
         </div>
       </>
