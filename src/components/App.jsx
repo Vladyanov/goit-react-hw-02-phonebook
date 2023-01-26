@@ -37,13 +37,13 @@ class App extends Component {
     if (this.isDuplicate(name)) {
       return alert(`${name} is already in contacts list`);
     }
+    const newContact = {
+      id: nanoid(),
+      name,
+      number,
+    };
     this.setState(prevState => {
       const { contacts } = prevState;
-      const newContact = {
-        id: nanoid(),
-        name,
-        number,
-      };
       return { contacts: [newContact, ...contacts] };
     });
   };
