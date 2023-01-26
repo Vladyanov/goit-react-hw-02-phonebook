@@ -1,48 +1,7 @@
-.formGroup {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 150px;
-  margin-bottom: 10px;
-
-  font-style: 16px;
-  font-weight: 600;
-}
-
-.label {
-  margin-bottom: 10px;
-  display: block;
-}
-
-input {
-  padding-left: 10px;
-}
-
 .title {
   margin-top: 15px;
   margin-bottom: 15px;
-  font-size: 24px;
+  font-size: 28px;
   font-weight: 700;
   text-align: center;
-}
-
-.btn {
-  display: inline-block;
-  border-radius: 7px;
-  cursor: pointer;
-  width: 90px;
-  height: 30px;
-  padding: 5px;
-  outline: none;
-  font-size: 14px;
-
-  &:active {
-    background-color: #eff8ee;
-    font-weight: 500;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  }
-
-  &:not(:last-child) {
-    margin-right: 40px;
-  }
 }
